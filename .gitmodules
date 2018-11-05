@@ -1,0 +1,3 @@
+[submodule "libtrie"]
+	path = libtrie
+	url = https://github.com/legale/libtrie
