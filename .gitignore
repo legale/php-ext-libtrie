@@ -1,0 +1,10 @@
+# ignore
+.**
+cmake-build-debug
+*.out
+*.o
+*.so
+
+# include
+!.gitignore
+

@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/php-ext-libtrie.dir/php_libtrie.c.o  -o php-ext-libtrie 

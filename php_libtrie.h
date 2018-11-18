@@ -56,8 +56,11 @@ extern zend_module_entry libtrie_module_entry;
 PHP_FUNCTION(confirm_libtrie_compiled);
 PHP_FUNCTION(my_array_fill);
 PHP_FUNCTION(yatrie_new);
+PHP_FUNCTION(yatrie_load);
+PHP_FUNCTION(yatrie_save);
 PHP_FUNCTION(yatrie_free);
 PHP_FUNCTION(yatrie_add);
+PHP_FUNCTION(yatrie_get_id);
 PHP_FUNCTION(node_traverse);
 
 static void php_libtrie_dtor(zend_resource *rsrc TSRMLS_DC);

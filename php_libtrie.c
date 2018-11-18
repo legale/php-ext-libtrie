@@ -78,11 +78,12 @@ PHP_FUNCTION (yatrie_add) {
     zval *resource; //указатель для zval структуры с ресурсом
     unsigned char *word = NULL; //указатель для строки добавляемого слова
     size_t word_len; //длина слова word
+
     uint32_t node_id; //id последнего узла, добавленного слова
 
     //получаем аргументы
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rs", &resource, &word, &word_len) == FAILURE) {
-        RETURN_FALSE
+        RETURN_NULL();
     }
 
 
@@ -107,6 +108,35 @@ PHP_FUNCTION (yatrie_add) {
     node_id = yatrie_add(word, 0, trie);
 
     //возвращаем числовое значение
+    RETURN_LONG(node_id);
+}
+
+/**
+ * @brief Возвращает id узла последней буквы заданного слова
+ * @param trie  : resource
+ * @param word  : string
+ * @param parent_id  : int родительский узел, с которого начнется проход по дереву
+ * @return node_id : int
+ */
+PHP_FUNCTION (yatrie_get_id) {
+    trie_s *trie; //указатель для дерева
+    zval *resource; //указатель для zval структуры с ресурсом
+    unsigned char *word = NULL; //указатель для строки добавляемого слова
+    size_t word_len; //длина слова word
+    zend_long parent_id = 0; //id родительского узла
+
+    uint32_t node_id; //id последнего узла, добавленного слова
+
+    //получаем аргументы
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rs|l", &resource, &word, &word_len, &parent_id) == FAILURE) {
+        RETURN_NULL();
+    }
+    //получаем указатель на дерево
+    trie = (trie_s *) zend_fetch_resource(Z_RES_P(resource), PHP_LIBTRIE_RES_NAME, le_libtrie);
+
+    node_id = yatrie_get_id(word, parent_id, trie);
+
+    //возвращаем id узла, 0 означает, что ничего не найдено
     RETURN_LONG(node_id);
 }
 /**
@@ -171,7 +201,7 @@ PHP_FUNCTION (yatrie_new) {
 
     //получаем аргументы из PHP
     if (zend_parse_parameters(ZEND_NUM_ARGS(), "lll", &max_nodes, &max_refs, &max_deallocated_size) == FAILURE) {
-        RETURN_FALSE;
+        RETURN_NULL();
     }
 
     //создаем дерево и записываем его адрес в памяти в созданный для этого указатель
@@ -186,6 +216,69 @@ PHP_FUNCTION (yatrie_new) {
      * пишет номер этого ресурса в глобальную переменную le_libtrie, а макрос ZVAL_RES()
      * сохраняет созданный ресурс в zval return_value */
     ZVAL_RES(return_value, zend_register_resource(trie, le_libtrie));
+}
+
+/**
+ * @brief Загружает trie из файла и возвращает его ресурс
+ * @param filepath  : string
+ * @return trie     : resource
+ */
+PHP_FUNCTION (yatrie_load) {
+    /* Это указатель на дерево */
+    trie_s *trie;
+    //это переменные для аргументов функции
+    unsigned char *filepath = NULL; //указатель для пути к файлу словаря
+    size_t filepath_len; //длина строки
+
+    //получаем аргументы из PHP
+    if (zend_parse_parameters(ZEND_NUM_ARGS(), "s", &filepath, &filepath_len) == FAILURE) {
+        RETURN_NULL();
+    }
+
+    //создаем дерево и записываем его адрес в памяти в созданный для этого указатель
+    trie = yatrie_load(filepath);
+
+    //Если не удалось - завершаем работу
+    if (!trie) {
+        RETURN_NULL();
+    }
+    //тут выполняется 2 действия
+    /* функция zend_register_resource() регистрирует ресурс в недрах Zend,
+     * пишет номер этого ресурса в глобальную переменную le_libtrie, а макрос ZVAL_RES()
+     * сохраняет созданный ресурс в zval return_value */
+    ZVAL_RES(return_value, zend_register_resource(trie, le_libtrie));
+}
+
+/**
+ * @brief Сохраняет trie в файл
+ * @param filepath  : string
+ * @return : int trie_file_size
+ */
+PHP_FUNCTION (yatrie_save) {
+    /* Это указатель на дерево */
+    trie_s *trie;
+    zval *resource;
+    //это переменные для аргументов функции
+    unsigned char *filepath = NULL; //указатель для пути к файлу словаря
+    size_t filepath_len; //длина строки
+    size_t trie_file_size; //размер словаря
+
+    //получаем аргументы из PHP
+    if (zend_parse_parameters(ZEND_NUM_ARGS(), "rs",  &resource, &filepath, &filepath_len) == FAILURE) {
+        RETURN_NULL();
+    }
+    //получаем указатель на trie из указателя на zval
+    trie = (trie_s *) zend_fetch_resource(Z_RES_P(resource), PHP_LIBTRIE_RES_NAME, le_libtrie);
+
+    //создаем дерево и записываем его адрес в памяти в созданный для этого указатель
+    trie_file_size = yatrie_save(filepath, trie);
+
+    //Если не удалось - завершаем работу
+    if (!trie_file_size) {
+        RETURN_NULL();
+    }else{
+        RETURN_LONG(trie_file_size);
+    }
 }
 
 
@@ -283,8 +376,11 @@ const zend_function_entry libtrie_functions[] = {
         PHP_FE(confirm_libtrie_compiled, NULL)        /* For testing, remove later. */
         PHP_FE(my_array_fill, NULL)
         PHP_FE(yatrie_new, NULL)
+        PHP_FE(yatrie_load, NULL)
+        PHP_FE(yatrie_save, NULL)
         PHP_FE(yatrie_free, NULL)
         PHP_FE(yatrie_add, NULL)
+        PHP_FE(yatrie_get_id, NULL)
         PHP_FE(node_traverse, NULL)
         PHP_FE_END    /* Must be the last line in libtrie_functions[] */
 };
