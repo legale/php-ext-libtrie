@@ -1,4 +1,4 @@
-
+// php-ext-libtrie v0.1.3
 #include "php_libtrie.h"
 
 
@@ -15,37 +15,43 @@ static int le_libtrie;
  *                                добавлена в начало каждого найденного слова
  * @return array
  */
-PHP_FUNCTION (node_traverse) {
+PHP_FUNCTION (yatrie_node_traverse) {
     trie_s *trie; //указатель для trie
     words_s *words; //структура для сохранения слов из trie
+    string_s *head_libtrie; //структура для передачи префикса
+
     zval * resource; //указатель для zval ресурса
     zend_long node_id; //начальный узел
-    unsigned char *head = NULL; //указатель на строку префикс
-    size_t head_len; //длина префикса
+    zend_string *head = NULL; //указатель на строку префикс
 
-    //получаем аргументы из PHP
-    if (zend_parse_parameters(ZEND_NUM_ARGS(), "rl|s", &resource, &node_id, &head, &head_len) == FAILURE) {
-        RETURN_NULL(); //возвращаем null в случае неудачи
-    }
+
+    //получаем параметры стандартным для php методом - через макросы
+    ZEND_PARSE_PARAMETERS_START(2, 3)
+        Z_PARAM_RESOURCE(resource)
+        Z_PARAM_LONG(node_id)
+    Z_PARAM_OPTIONAL
+        Z_PARAM_STR(head)
+    ZEND_PARSE_PARAMETERS_END();
+
 
     //получим наше дерево из ресурса
     trie = (trie_s *) zend_fetch_resource(Z_RES_P(resource), PHP_LIBTRIE_RES_NAME, le_libtrie);
 
-    //для сохранения слов из trie функция node_traverse() использует специальную структура words_s
+    //для сохранения слов из trie функция yatrie_node_traverse() использует специальную структура words_s
     //выделим память под нее
     words = (words_s *) calloc(1, sizeof(words_s));
     words->counter = 0; //установим счетчик слов на 0
 
     //нужна еще 1 структура для передачи префикса
-    string_s *head_libtrie = calloc(1, sizeof(string_s));
+    head_libtrie = (string_s *)calloc(1, sizeof(string_s));
 
     //если head задан
     if(head != NULL) {
-        head_libtrie->length = (uint32_t)head_len; //присвоим длину
-        memcpy(&head_libtrie->letters, head, head_len); //скопируем строку в head_libtrie
+        head_libtrie->length = ZSTR_LEN(head); //присвоим длину
+        memcpy(&head_libtrie->letters, ZSTR_VAL(head), ZSTR_LEN(head)); //скопируем строку в head_libtrie
     }
     //теперь получим слова из trie
-    node_traverse(words, (uint32_t) node_id, head_libtrie, trie);
+    yatrie_node_traverse(words, (uint32_t) node_id, head_libtrie, trie);
     //теперь создадим PHP массив, размер возьмем из счетчика слов в words
     array_init_size(return_value, words->counter);
 
@@ -63,6 +69,62 @@ PHP_FUNCTION (node_traverse) {
     //теперь надо освободить память выделенную под words и head_libtrie
     free(words);
     free(head_libtrie);
+}
+
+
+/**
+ * @brief Возвращает все дочерние узлы определенного узла. Элемент 0 - флаг окончания слова.
+ * @param trie                  : resource
+ * @param node_id               : int
+ * @param letters_flag          : bool Позволяет получить ассоц. массив с ключами в виде букв, а не номеров битов
+ * @return array
+ */
+PHP_FUNCTION (yatrie_node_get_children) {
+    trie_s *trie; //указатель для trie
+    children_s *children; //структура для сохранения детей узла
+    zval * resource; //указатель для zval ресурса
+    zend_long node_id; //id узла
+    zend_bool letters_flag = 0; //если флаг установлен, будут возвращен ассоц. массив с буквами в виде ключей
+
+    //получаем аргументы из PHP
+    if (zend_parse_parameters(ZEND_NUM_ARGS(), "rl|b", &resource, &node_id, &letters_flag) == FAILURE) {
+        RETURN_NULL(); //возвращаем null в случае неудачи
+    }
+
+    //получим наше дерево из ресурса
+    trie = (trie_s *) zend_fetch_resource(Z_RES_P(resource), PHP_LIBTRIE_RES_NAME, le_libtrie);
+
+    //выделение памяти под структуру детей узла
+    children = (children_s *) calloc(1, sizeof(children_s));
+
+
+    //теперь получим слова из trie
+    yatrie_node_get_children(children, (uint32_t) node_id, trie);
+
+    //теперь создадим PHP массив, размер возьмем из самой структуры для хранения детей узла
+    // +1 потому что флаг окончания слова не входит в length
+
+
+    //добавим данные из блока letters, значения в этом блоке содержат номера поднятых в маске узла битов
+    //если есть флаг окончания слова, то 0 элемент будет содержать 1 (номер бита флага листа)
+    if(children->letters[0] == 1) {
+        array_init_size(return_value, children->length + 1);
+        add_index_long(return_value, 0, 1);
+        for (uint32_t i = 1; i <= children->length; ++i) {
+            //добавляем id узлов букв, в те индексы, которые соответствуют этим буквам
+            add_index_long(return_value, children->letters[i], children->nodes[i - 1]);
+        }
+        //в противном случае
+    }else{
+        array_init_size(return_value, children->length);
+        for (uint32_t i = 0; i < children->length; ++i) {
+            //добавляем id узлов букв, в те индексы, которые соответствуют этим буквам
+            add_index_long(return_value, children->letters[i], children->nodes[i]);
+        }
+    }
+
+    //теперь надо освободить память выделенную под words и head_libtrie
+    free(children);
 }
 
 
@@ -121,7 +183,7 @@ PHP_FUNCTION (yatrie_add) {
 PHP_FUNCTION (yatrie_get_id) {
     trie_s *trie; //указатель для дерева
     zval *resource; //указатель для zval структуры с ресурсом
-    unsigned char *word = NULL; //указатель для строки добавляемого слова
+    unsigned char *word = NULL; //указатель для строки искомого слова
     size_t word_len; //длина слова word
     zend_long parent_id = 0; //id родительского узла
 
@@ -139,6 +201,82 @@ PHP_FUNCTION (yatrie_get_id) {
     //возвращаем id узла, 0 означает, что ничего не найдено
     RETURN_LONG(node_id);
 }
+
+/**
+ * @brief Возвращает true если последняя буква заданного слова является листом
+ * @param trie  : resource
+ * @param word  : string
+ * @param parent_id  : int родительский узел, с которого начнется проход по дереву
+ * @return node_id : int
+ */
+PHP_FUNCTION (yatrie_is_leaf) {
+    trie_s *trie; //указатель для дерева
+    zval *resource; //указатель для zval структуры с ресурсом
+    unsigned char *word = NULL; //указатель для строки искомого слова
+    size_t word_len; //длина слова word
+    zend_long parent_id = 0; //id родительского узла
+
+    zend_long node_id; //id последнего узла, добавленного слова
+
+    //получаем аргументы
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rs|l", &resource, &word, &word_len, &parent_id) == FAILURE) {
+        RETURN_NULL();
+    }
+    //получаем указатель на дерево
+    trie = (trie_s *) zend_fetch_resource(Z_RES_P(resource), PHP_LIBTRIE_RES_NAME, le_libtrie);
+
+    if(parent_id == 0){
+        node_id = BIT_GET(*NODE_GET(0, trie).mask[0],1) ? 1 : -1;
+    }else{
+        node_id = yatrie_get_id(word, parent_id, trie);
+        if(node_id){
+            node_id = BIT_GET(*NODE_GET(node_id, trie).mask[0],1) ? 1 : -1;
+        }
+    }
+
+    //возвращаем id узла, 0 означает, что ничего не найдено
+    RETURN_LONG(node_id);
+}
+
+
+/**
+ * @brief Возвращает массив всех найденных узлов заданного слова, а также узлы-листья
+ * @param trie  : resource
+ * @param word  : string
+ * @param parent_id (необязательный) : int родительский узел, с которого начнется проход по дереву
+ * @return word_nodes : array отрицательные значения для узлов без листа, положительные для узлов с листами
+ */
+PHP_FUNCTION (yatrie_get_word_nodes) {
+    trie_s *trie; //указатель для дерева
+    zval *resource; //указатель для zval структуры с ресурсом
+    unsigned char *word = NULL; //указатель для строки искомого слова
+    size_t word_len; //длина слова word
+    zend_long parent_id = 0; //id родительского узла
+    word_nodes_s word_nodes = {};
+
+    //получаем аргументы
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rs|l", &resource, &word, &word_len, &parent_id) == FAILURE) {
+        RETURN_NULL();
+    }
+    //получаем указатель на дерево
+    trie = (trie_s *) zend_fetch_resource(Z_RES_P(resource), PHP_LIBTRIE_RES_NAME, le_libtrie);
+
+    yatrie_get_word_nodes(&word_nodes, word, 0, trie);
+    array_init_size(return_value, word_nodes.length);
+    for(uint32_t i = 0;word_nodes.nodes[i]; ++i){
+        //printf("%i %i %i\n", word_nodes.letters[i], i, word_nodes.nodes[i]);
+        if(word_nodes.letters[i] == 1){
+            add_next_index_long(return_value, (zend_long)word_nodes.nodes[i]);
+        } else {
+            add_next_index_long(return_value, -((zend_long)word_nodes.nodes[i]));
+        }
+    }
+    return;
+}
+
+
+
+
 /**
  * @brief Удаляет дерево из памяти
  * @param trie  : resource
@@ -240,6 +378,7 @@ PHP_FUNCTION (yatrie_load) {
 
     //Если не удалось - завершаем работу
     if (!trie) {
+        php_error_docref(NULL, E_WARNING, "failed to open trie file");
         RETURN_NULL();
     }
     //тут выполняется 2 действия
@@ -281,21 +420,129 @@ PHP_FUNCTION (yatrie_save) {
     }
 }
 
+PHP_FUNCTION(yatrie_strrev) {
+    zend_string *str; //указатель на передаваемую в функцию структуру строки
+    const unsigned char *s;
+    unsigned char *e;
+    unsigned char *p;
+    zend_string *n; //указатель на результирующую структуру строки
+    //получаем переданную строку в указатель str
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+            Z_PARAM_STR(str)
+    ZEND_PARSE_PARAMETERS_END();
+    n = zend_string_alloc(ZSTR_LEN(str), 0); //выделяем память под новую строку
+    p = ZSTR_VAL(n); //передаем адрес строки из структуры во временный указатель новой строки
+    e = p + ZSTR_LEN(str); //перематываем новый указатель на конец строки
+    s = ZSTR_VAL(str); //передаем адрес строки из структуры во временный указатель старой строки
+    *e-- = '\0'; // пишем терминатор конца строки в конец строки
 
-PHP_FUNCTION (confirm_libtrie_compiled) {
-    char *arg = NULL;
-    size_t arg_len, len;
-    zend_string *strg;
+    while (e >= p) { //крутим цикл пока перемотанный указатель не дойдет до первого блока новой строки
+        if (*s < 128) { //1 byte char       max 0b01111111
+            *e-- = *s++;
+        }else if(*s < 224) { //2 byte char  max 0b11011111
+            *e-- = *(s+1);
+            *e-- = *s;
+            s += 2;
+        } else if (*s < 240) { //3 byte     max 0b11101111
+            *e-- = *(s+2);
+            *e-- = *(s+1);
+            *e-- = *s;
+            s += 3;
+        } else { //4 byte                   max ob11110111
+            *e-- = *(s+3);
+            *e-- = *(s+2);
+            *e-- = *(s+1);
+            *e-- = *s;
+            s += 4;
+        }
+    }
+    //возвращаем новую строку
+    RETVAL_NEW_STR(n);
+}
 
-    if (zend_parse_parameters(ZEND_NUM_ARGS(), "s", &arg, &arg_len) == FAILURE) {
+
+/* Convert a multibyte string to an array. If split_length is specified,
+ * break the string down into chunks each split_length characters long. */
+PHP_FUNCTION(yatrie_str_split){
+    zend_string *str;
+    zend_long split_length = 1;
+    const unsigned char *p, *last; //string pointers
+
+    ZEND_PARSE_PARAMETERS_START(1, 2)
+            Z_PARAM_STR(str)
+            Z_PARAM_OPTIONAL
+            Z_PARAM_LONG(split_length)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (split_length <= 0) {
+        php_error_docref(NULL, E_WARNING, "The length of each segment must be greater than zero");
+        RETURN_FALSE;
+    }
+
+    if (0 == ZSTR_LEN(str) || (size_t)split_length >= ZSTR_LEN(str)) {
+        array_init_size(return_value, 1);
+        add_next_index_stringl(return_value, ZSTR_VAL(str), ZSTR_LEN(str));
         return;
     }
 
-    strg = strpprintf(0,
-                      "Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.",
-                      "libtrie", arg);
+    //minimum array size is string length / 4 bytes / split_length
+    array_init_size(return_value, (ZSTR_LEN(str) >> 2) / (size_t)split_length);
 
-    RETURN_STR(strg);
+
+	//MACROS to create precount array
+	#define B2(n) n,n
+	#define B4(n) B2(n),B2(n)
+	#define B8(n) B4(n),B4(n)
+	#define B16(n) B8(n),B8(n)
+	#define B32(n) B16(n),B16(n)
+	#define B64(n) B32(n),B32(n)
+	#define B128(n) B64(n),B64(n)
+
+	/*
+	 * 1 byte  max 0b01111111 (0-127 128) ASCII
+	 * 1 byte  max 0b10111111 (128-191 64) data
+	 * 2 bytes max 0b11011111 (191-223 32) control char
+	 * 3 bytes max 0b11101111 (224-239 16) control char
+	 * 4 bytes max ob11110111 (240-247 8) control char
+	 * 5 bytes max ob11111011 (248-251 4) control char
+	 * 6 bytes max ob11111101 (252-253 2) control char
+	 * 1 byte  max ob11111111 (254-255 2) out of bounds  */
+	const unsigned char byte[256] = {B128(1),B64(1),B32(2),B16(3),B8(4),B4(5),B2(6),B2(1)};
+
+    p = ZSTR_VAL(str);
+    last = p + ZSTR_LEN(str);
+
+    while (p < last) {
+    	const unsigned char *chunk_p = p;
+        uint32_t chunk_length = 0;
+        for(uint32_t char_count = 0; char_count < split_length; ++char_count) {
+			chunk_length += byte[*p];
+            p += byte[*p];
+		}
+        add_next_index_stringl(return_value, chunk_p, chunk_length);
+    }
+    return;
+}
+
+
+
+PHP_FUNCTION (confirm_libtrie_compiled) {
+    const char *c = NULL;
+    size_t len;
+    zend_string *str;
+
+    ZEND_PARSE_PARAMETERS_START(0, 1)
+            Z_PARAM_OPTIONAL
+            Z_PARAM_STR(str)
+    ZEND_PARSE_PARAMETERS_END();
+
+    len = ZSTR_LEN(str);
+    c = ZSTR_VAL(str);
+
+
+    str = strpprintf(0, "Congratulations! arg passed: %s len: %d", c, len);
+
+    RETURN_STR(str);
 }
 
 PHP_FUNCTION (my_array_fill) {
@@ -381,7 +628,12 @@ const zend_function_entry libtrie_functions[] = {
         PHP_FE(yatrie_free, NULL)
         PHP_FE(yatrie_add, NULL)
         PHP_FE(yatrie_get_id, NULL)
-        PHP_FE(node_traverse, NULL)
+        PHP_FE(yatrie_node_traverse, NULL)
+        PHP_FE(yatrie_node_get_children, NULL)
+        PHP_FE(yatrie_get_word_nodes, NULL)
+        PHP_FE(yatrie_strrev, NULL)
+        PHP_FE(yatrie_str_split, NULL)
+        PHP_FE(yatrie_is_leaf, NULL)
         PHP_FE_END    /* Must be the last line in libtrie_functions[] */
 };
 

@@ -2435,60 +2435,72 @@ $as_echo "$ac_cv_path_EGREP" >&6; }
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for a sed that does not truncate output" >&5
 $as_echo_n "checking for a sed that does not truncate output... " >&6; }
-if ${lt_cv_path_SED+:} false; then :
+if ${ac_cv_path_SED+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  # Loop through the user's path and test for sed and gsed.
-# Then use that list of sed's as ones to test for truncation.
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+            ac_script=s/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/
+     for ac_i in 1 2 3 4 5 6 7; do
+       ac_script="$ac_script$as_nl$ac_script"
+     done
+     echo "$ac_script" 2>/dev/null | sed 99q >conftest.sed
+     { ac_script=; unset ac_script;}
+     if test -z "$SED"; then
+  ac_path_SED_found=false
+  # Loop through the user's path and test for each of PROGNAME-LIST
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
 for as_dir in $PATH
 do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
-  for lt_ac_prog in sed gsed; do
+    for ac_prog in sed gsed; do
     for ac_exec_ext in '' $ac_executable_extensions; do
-      if test -f "$as_dir/$lt_ac_prog$ac_exec_ext"; then
-        lt_ac_sed_list="$lt_ac_sed_list $as_dir/$lt_ac_prog$ac_exec_ext"
-      fi
+      ac_path_SED="$as_dir/$ac_prog$ac_exec_ext"
+      as_fn_executable_p "$ac_path_SED" || continue
+# Check for GNU ac_path_SED and select it if it is found.
+  # Check for GNU $ac_path_SED
+case `"$ac_path_SED" --version 2>&1` in
+*GNU*)
+  ac_cv_path_SED="$ac_path_SED" ac_path_SED_found=:;;
+*)
+  ac_count=0
+  $as_echo_n 0123456789 >"conftest.in"
+  while :
+  do
+    cat "conftest.in" "conftest.in" >"conftest.tmp"
+    mv "conftest.tmp" "conftest.in"
+    cp "conftest.in" "conftest.nl"
+    $as_echo '' >> "conftest.nl"
+    "$ac_path_SED" -f conftest.sed < "conftest.nl" >"conftest.out" 2>/dev/null || break
+    diff "conftest.out" "conftest.nl" >/dev/null 2>&1 || break
+    as_fn_arith $ac_count + 1 && ac_count=$as_val
+    if test $ac_count -gt ${ac_path_SED_max-0}; then
+      # Best one so far, save it but keep looking for a better one
+      ac_cv_path_SED="$ac_path_SED"
+      ac_path_SED_max=$ac_count
+    fi
+    # 10*(2^10) chars as input seems more than enough
+    test $ac_count -gt 10 && break
+  done
+  rm -f conftest.in conftest.tmp conftest.nl conftest.out;;
+esac
+
+      $ac_path_SED_found && break 3
     done
   done
-done
-lt_ac_max=0
-lt_ac_count=0
-# Add /usr/xpg4/bin/sed as it is typically found on Solaris
-# along with /bin/sed that truncates output.
-for lt_ac_sed in $lt_ac_sed_list /usr/xpg4/bin/sed; do
-  test ! -f $lt_ac_sed && continue
-  cat /dev/null > conftest.in
-  lt_ac_count=0
-  echo $ECHO_N "0123456789$ECHO_C" >conftest.in
-  # Check for GNU sed and select it if it is found.
-  if "$lt_ac_sed" --version 2>&1 < /dev/null | grep 'GNU' > /dev/null; then
-    lt_cv_path_SED=$lt_ac_sed
-    break
-  fi
-  while true; do
-    cat conftest.in conftest.in >conftest.tmp
-    mv conftest.tmp conftest.in
-    cp conftest.in conftest.nl
-    echo >>conftest.nl
-    $lt_ac_sed -e 's/a$//' < conftest.nl >conftest.out || break
-    cmp -s conftest.out conftest.nl || break
-    # 10000 chars as input seems more than enough
-    test $lt_ac_count -gt 10 && break
-    lt_ac_count=`expr $lt_ac_count + 1`
-    if test $lt_ac_count -gt $lt_ac_max; then
-      lt_ac_max=$lt_ac_count
-      lt_cv_path_SED=$lt_ac_sed
-    fi
   done
-done
-
+IFS=$as_save_IFS
+  if test -z "$ac_cv_path_SED"; then
+    as_fn_error $? "no acceptable sed could be found in \$PATH" "$LINENO" 5
+  fi
+else
+  ac_cv_path_SED=$SED
 fi
 
-SED=$lt_cv_path_SED
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $SED" >&5
-$as_echo "$SED" >&6; }
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_path_SED" >&5
+$as_echo "$ac_cv_path_SED" >&6; }
+ SED="$ac_cv_path_SED"
+  rm -f conftest.sed
 
 
   
@@ -2528,7 +2540,7 @@ EOF
   echo "'$0' \\" >> config.nice
   if test `expr " $0" : " '.*"` = 0; then
     CONFIGURE_COMMAND="$CONFIGURE_COMMAND '$0'"
-  else 
+  else
     CONFIGURE_COMMAND="$CONFIGURE_COMMAND $0"
   fi
   CONFIGURE_ARGS="$clean_configure_args"
@@ -3768,7 +3780,7 @@ phpincludedir=`$PHP_CONFIG --include-dir 2>/dev/null`
 INCLUDES=`$PHP_CONFIG --includes 2>/dev/null`
 EXTENSION_DIR=`$PHP_CONFIG --extension-dir 2>/dev/null`
 PHP_EXECUTABLE=`$PHP_CONFIG --php-binary 2>/dev/null`
- 
+
 if test -z "$prefix"; then
   as_fn_error $? "Cannot find php-config. Please use --with-php-config=PATH" "$LINENO" 5
 fi
@@ -3912,7 +3924,7 @@ fi
 
   OVERALL_TARGET=libphp$PHP_MAJOR_VERSION.la
   php_sapi_module=shared
-  
+
   php_c_pre=$shared_c_pre
   php_c_meta=$shared_c_meta
   php_c_post=$shared_c_post
@@ -3972,7 +3984,7 @@ else
         php_cv_re2c_version=invalid
       else
         php_cv_re2c_version="`$RE2C --version | cut -d ' ' -f 2  2>/dev/null` (ok)"
-      fi 
+      fi
     
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $php_cv_re2c_version" >&5
@@ -3980,8 +3992,13 @@ $as_echo "$php_cv_re2c_version" >&6; }
   fi
   case $php_cv_re2c_version in
     ""|invalid)
-      { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You will need re2c 0.13.4 or later if you want to regenerate PHP parsers." >&5
-$as_echo "$as_me: WARNING: You will need re2c 0.13.4 or later if you want to regenerate PHP parsers." >&2;}
+      if test -f "$abs_srcdir/Zend/zend_language_scanner.c"; then
+        { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You will need re2c 0.13.4 or later if you want to regenerate PHP lexers." >&5
+$as_echo "$as_me: WARNING: You will need re2c 0.13.4 or later if you want to regenerate PHP lexers." >&2;}
+      else
+        as_fn_error $? "You will need re2c 0.13.4 or later to generate PHP lexers." "$LINENO" 5
+      fi
+
       RE2C="exit 0;"
       ;;
   esac
@@ -4039,9 +4056,9 @@ test -n "$AWK" || AWK="bork"
       { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: mawk is known to have problems on some systems. You should install GNU awk" >&5
 $as_echo "$as_me: WARNING: mawk is known to have problems on some systems. You should install GNU awk" >&2;}
       ;;
-    *gawk)  
+    *gawk)
       ;;
-    bork)   
+    bork)
       as_fn_error $? "Could not find awk; Install GNU awk" "$LINENO" 5
       ;;
     *)
@@ -4130,7 +4147,7 @@ if test "$PHP_LIBTRIE" != "no"; then
   /*) ac_srcdir=`echo "$ext_dir"|cut -c 2-`"/"; ac_bdir=$ac_srcdir; ac_inc="-I$ac_bdir -I$abs_srcdir/$ac_bdir" ;;
   *) ac_srcdir="$abs_srcdir/$ext_dir/"; ac_bdir="$ext_dir/"; ac_inc="-I$ac_bdir -I$ac_srcdir" ;;
   esac
-  
+
   
 
   b_c_pre=$php_c_pre
@@ -4148,12 +4165,12 @@ if test "$PHP_LIBTRIE" != "no"; then
   libtrie/src/single_list.c \
   php_libtrie.c \
   ; do
-  
+
       IFS=.
       set $ac_src
       ac_obj=$1
       IFS=$old_IFS
-      
+
       PHP_GLOBAL_OBJS="$PHP_GLOBAL_OBJS $ac_bdir$ac_obj.lo"
 
       case $ac_src in
@@ -4183,7 +4200,7 @@ EOF
   /*) ac_srcdir=`echo "$ext_dir"|cut -c 2-`"/"; ac_bdir=$ac_srcdir; ac_inc="-I$ac_bdir -I$abs_srcdir/$ac_bdir" ;;
   *) ac_srcdir="$abs_srcdir/$ext_dir/"; ac_bdir="$ext_dir/"; ac_inc="-I$ac_bdir -I$ac_srcdir" ;;
   esac
-  
+
   
 
   b_c_pre=$shared_c_pre
@@ -4201,12 +4218,12 @@ EOF
   libtrie/src/single_list.c \
   php_libtrie.c \
   ; do
-  
+
       IFS=.
       set $ac_src
       ac_obj=$1
       IFS=$old_IFS
-      
+
       shared_objects_libtrie="$shared_objects_libtrie $ac_bdir$ac_obj.lo"
 
       case $ac_src in
@@ -4272,7 +4289,7 @@ _ACEOF
   /*) ac_srcdir=`echo "$ext_dir"|cut -c 2-`"/"; ac_bdir=$ac_srcdir; ac_inc="-I$ac_bdir -I$abs_srcdir/$ac_bdir" ;;
   *) ac_srcdir="$abs_srcdir/$ext_dir/"; ac_bdir="$ext_dir/"; ac_inc="-I$ac_bdir -I$ac_srcdir" ;;
   esac
-  
+
   
 
   b_c_pre=$php_c_pre
@@ -4290,12 +4307,12 @@ _ACEOF
   libtrie/src/single_list.c \
   php_libtrie.c \
   ; do
-  
+
       IFS=.
       set $ac_src
       ac_obj=$1
       IFS=$old_IFS
-      
+
       PHP_GLOBAL_OBJS="$PHP_GLOBAL_OBJS $ac_bdir$ac_obj.lo"
 
       case $ac_src in
@@ -4322,7 +4339,7 @@ EOF
   /*) ac_srcdir=`echo "$ext_dir"|cut -c 2-`"/"; ac_bdir=$ac_srcdir; ac_inc="-I$ac_bdir -I$abs_srcdir/$ac_bdir" ;;
   *) ac_srcdir="$abs_srcdir/$ext_dir/"; ac_bdir="$ext_dir/"; ac_inc="-I$ac_bdir -I$ac_srcdir" ;;
   esac
-  
+
   
 
   b_c_pre=$php_c_pre
@@ -4340,12 +4357,12 @@ EOF
   libtrie/src/single_list.c \
   php_libtrie.c \
   ; do
-  
+
       IFS=.
       set $ac_src
       ac_obj=$1
       IFS=$old_IFS
-      
+
       PHP_GLOBAL_OBJS="$PHP_GLOBAL_OBJS $ac_bdir$ac_obj.lo"
 
       case $ac_src in
@@ -4463,6 +4480,63 @@ else
   enable_fast_install=yes
 fi
 
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for a sed that does not truncate output" >&5
+$as_echo_n "checking for a sed that does not truncate output... " >&6; }
+if ${lt_cv_path_SED+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  # Loop through the user's path and test for sed and gsed.
+# Then use that list of sed's as ones to test for truncation.
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for lt_ac_prog in sed gsed; do
+    for ac_exec_ext in '' $ac_executable_extensions; do
+      if test -f "$as_dir/$lt_ac_prog$ac_exec_ext"; then
+        lt_ac_sed_list="$lt_ac_sed_list $as_dir/$lt_ac_prog$ac_exec_ext"
+      fi
+    done
+  done
+done
+lt_ac_max=0
+lt_ac_count=0
+# Add /usr/xpg4/bin/sed as it is typically found on Solaris
+# along with /bin/sed that truncates output.
+for lt_ac_sed in $lt_ac_sed_list /usr/xpg4/bin/sed; do
+  test ! -f $lt_ac_sed && continue
+  cat /dev/null > conftest.in
+  lt_ac_count=0
+  echo $ECHO_N "0123456789$ECHO_C" >conftest.in
+  # Check for GNU sed and select it if it is found.
+  if "$lt_ac_sed" --version 2>&1 < /dev/null | grep 'GNU' > /dev/null; then
+    lt_cv_path_SED=$lt_ac_sed
+    break
+  fi
+  while true; do
+    cat conftest.in conftest.in >conftest.tmp
+    mv conftest.tmp conftest.in
+    cp conftest.in conftest.nl
+    echo >>conftest.nl
+    $lt_ac_sed -e 's/a$//' < conftest.nl >conftest.out || break
+    cmp -s conftest.out conftest.nl || break
+    # 10000 chars as input seems more than enough
+    test $lt_ac_count -gt 10 && break
+    lt_ac_count=`expr $lt_ac_count + 1`
+    if test $lt_ac_count -gt $lt_ac_max; then
+      lt_ac_max=$lt_ac_count
+      lt_cv_path_SED=$lt_ac_sed
+    fi
+  done
+done
+
+fi
+
+SED=$lt_cv_path_SED
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $SED" >&5
+$as_echo "$SED" >&6; }
 
 
 @%:@ Check whether --with-gnu-ld was given.
@@ -12796,7 +12870,6 @@ EOF
 
 
 test -d modules || $php_shtool mkdir modules
-touch .deps
 
 ac_config_headers="$ac_config_headers config.h"
 

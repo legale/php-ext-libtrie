@@ -14,7 +14,7 @@ hostname = ru-mi
 uname -m = x86_64
 uname -r = 4.9.0-8-amd64
 uname -s = Linux
-uname -v = #1 SMP Debian 4.9.110-3+deb9u5 (2018-09-30)
+uname -v = #1 SMP Debian 4.9.130-2 (2018-10-27)
 
 /usr/bin/uname -p = unknown
 /bin/uname -X     = unknown
@@ -35,6 +35,7 @@ PATH: /usr/bin
 PATH: /bin
 PATH: /usr/local/games
 PATH: /usr/games
+PATH: /home/ru/.fzf/bin
 
 
 ## ----------- ##
@@ -46,19 +47,19 @@ configure:2364: result: /bin/grep
 configure:2369: checking for egrep
 configure:2431: result: /bin/grep -E
 configure:2436: checking for a sed that does not truncate output
-configure:2490: result: /bin/sed
-configure:2627: checking for cc
-configure:2643: found /usr/bin/cc
-configure:2654: result: cc
-configure:2685: checking for C compiler version
-configure:2694: cc --version >&5
+configure:2500: result: /bin/sed
+configure:2639: checking for cc
+configure:2655: found /usr/bin/cc
+configure:2666: result: cc
+configure:2697: checking for C compiler version
+configure:2706: cc --version >&5
 cc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516
 Copyright (C) 2016 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-configure:2705: $? = 0
-configure:2694: cc -v >&5
+configure:2717: $? = 0
+configure:2706: cc -v >&5
 Using built-in specs.
 COLLECT_GCC=cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/6/lto-wrapper
@@ -66,58 +67,58 @@ Target: x86_64-linux-gnu
 Configured with: ../src/configure -v --with-pkgversion='Debian 6.3.0-18+deb9u1' --with-bugurl=file:///usr/share/doc/gcc-6/README.Bugs --enable-languages=c,ada,c++,java,go,d,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-6 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --disable-browser-plugin --enable-java-awt=gtk --enable-gtk-cairo --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-6-amd64/jre --enable-java-home --with-jvm-root-dir=/usr/lib/jvm/java-1.5.0-gcj-6-amd64 --with-jvm-jar-dir=/usr/lib/jvm-exports/java-1.5.0-gcj-6-amd64 --with-arch-directory=amd64 --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --with-target-system-zlib --enable-objc-gc=auto --enable-multiarch --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
 Thread model: posix
 gcc version 6.3.0 20170516 (Debian 6.3.0-18+deb9u1) 
-configure:2705: $? = 0
-configure:2694: cc -V >&5
+configure:2717: $? = 0
+configure:2706: cc -V >&5
 cc: error: unrecognized command line option '-V'
 cc: fatal error: no input files
 compilation terminated.
-configure:2705: $? = 1
-configure:2694: cc -qversion >&5
+configure:2717: $? = 1
+configure:2706: cc -qversion >&5
 cc: error: unrecognized command line option '-qversion'; did you mean '--version'?
 cc: fatal error: no input files
 compilation terminated.
-configure:2705: $? = 1
-configure:2725: checking whether the C compiler works
-configure:2747: cc    conftest.c  >&5
-configure:2751: $? = 0
-configure:2799: result: yes
-configure:2802: checking for C compiler default output file name
-configure:2804: result: a.out
-configure:2810: checking for suffix of executables
-configure:2817: cc -o conftest    conftest.c  >&5
-configure:2821: $? = 0
-configure:2843: result: 
-configure:2865: checking whether we are cross compiling
-configure:2873: cc -o conftest    conftest.c  >&5
-configure:2877: $? = 0
-configure:2884: ./conftest
-configure:2888: $? = 0
-configure:2903: result: no
-configure:2908: checking for suffix of object files
-configure:2930: cc -c   conftest.c >&5
-configure:2934: $? = 0
-configure:2955: result: o
-configure:2959: checking whether we are using the GNU C compiler
-configure:2978: cc -c   conftest.c >&5
-configure:2978: $? = 0
-configure:2987: result: yes
-configure:2996: checking whether cc accepts -g
-configure:3016: cc -c -g  conftest.c >&5
-configure:3016: $? = 0
-configure:3057: result: yes
-configure:3074: checking for cc option to accept ISO C89
-configure:3137: cc  -c -g -O2  conftest.c >&5
-configure:3137: $? = 0
-configure:3150: result: none needed
-configure:3176: checking how to run the C preprocessor
-configure:3207: cc -E  conftest.c
-configure:3207: $? = 0
-configure:3221: cc -E  conftest.c
+configure:2717: $? = 1
+configure:2737: checking whether the C compiler works
+configure:2759: cc    conftest.c  >&5
+configure:2763: $? = 0
+configure:2811: result: yes
+configure:2814: checking for C compiler default output file name
+configure:2816: result: a.out
+configure:2822: checking for suffix of executables
+configure:2829: cc -o conftest    conftest.c  >&5
+configure:2833: $? = 0
+configure:2855: result: 
+configure:2877: checking whether we are cross compiling
+configure:2885: cc -o conftest    conftest.c  >&5
+configure:2889: $? = 0
+configure:2896: ./conftest
+configure:2900: $? = 0
+configure:2915: result: no
+configure:2920: checking for suffix of object files
+configure:2942: cc -c   conftest.c >&5
+configure:2946: $? = 0
+configure:2967: result: o
+configure:2971: checking whether we are using the GNU C compiler
+configure:2990: cc -c   conftest.c >&5
+configure:2990: $? = 0
+configure:2999: result: yes
+configure:3008: checking whether cc accepts -g
+configure:3028: cc -c -g  conftest.c >&5
+configure:3028: $? = 0
+configure:3069: result: yes
+configure:3086: checking for cc option to accept ISO C89
+configure:3149: cc  -c -g -O2  conftest.c >&5
+configure:3149: $? = 0
+configure:3162: result: none needed
+configure:3188: checking how to run the C preprocessor
+configure:3219: cc -E  conftest.c
+configure:3219: $? = 0
+configure:3233: cc -E  conftest.c
 conftest.c:9:28: fatal error: ac_nonexistent.h: No such file or directory
  #include <ac_nonexistent.h>
                             ^
 compilation terminated.
-configure:3221: $? = 1
+configure:3233: $? = 1
 configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME ""
@@ -128,15 +129,15 @@ configure: failed program was:
 | #define PACKAGE_URL ""
 | /* end confdefs.h.  */
 | #include <ac_nonexistent.h>
-configure:3246: result: cc -E
-configure:3266: cc -E  conftest.c
-configure:3266: $? = 0
-configure:3280: cc -E  conftest.c
+configure:3258: result: cc -E
+configure:3278: cc -E  conftest.c
+configure:3278: $? = 0
+configure:3292: cc -E  conftest.c
 conftest.c:9:28: fatal error: ac_nonexistent.h: No such file or directory
  #include <ac_nonexistent.h>
                             ^
 compilation terminated.
-configure:3280: $? = 1
+configure:3292: $? = 1
 configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME ""
@@ -147,22 +148,22 @@ configure: failed program was:
 | #define PACKAGE_URL ""
 | /* end confdefs.h.  */
 | #include <ac_nonexistent.h>
-configure:3311: checking for icc
-configure:3320: result: no
-configure:3334: checking for suncc
-configure:3343: result: no
-configure:3361: checking whether cc understands -c and -o together
-configure:3389: cc -c conftest.c -o conftest2.o >&5
-configure:3393: $? = 0
-configure:3399: cc -c conftest.c -o conftest2.o >&5
-configure:3403: $? = 0
-configure:3458: result: yes
-configure:3472: checking for system library directory
-configure:3487: result: lib
-configure:3494: checking if compiler supports -R
-configure:3513: cc -o conftest -g -O2   conftest.c -R /usr/lib  >&5
+configure:3323: checking for icc
+configure:3332: result: no
+configure:3346: checking for suncc
+configure:3355: result: no
+configure:3373: checking whether cc understands -c and -o together
+configure:3401: cc -c conftest.c -o conftest2.o >&5
+configure:3405: $? = 0
+configure:3411: cc -c conftest.c -o conftest2.o >&5
+configure:3415: $? = 0
+configure:3470: result: yes
+configure:3484: checking for system library directory
+configure:3499: result: lib
+configure:3506: checking if compiler supports -R
+configure:3525: cc -o conftest -g -O2   conftest.c -R /usr/lib  >&5
 cc: error: unrecognized command line option '-R'; did you mean '-R'?
-configure:3513: $? = 1
+configure:3525: $? = 1
 configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME ""
@@ -180,170 +181,174 @@ configure: failed program was:
 |   ;
 |   return 0;
 | }
-configure:3523: result: no
-configure:3528: checking if compiler supports -Wl,-rpath,
-configure:3547: cc -o conftest -g -O2   conftest.c -Wl,-rpath,/usr/lib  >&5
-configure:3547: $? = 0
-configure:3557: result: yes
-configure:3602: checking build system type
-configure:3616: result: x86_64-unknown-linux-gnu
-configure:3636: checking host system type
-configure:3649: result: x86_64-unknown-linux-gnu
-configure:3669: checking target system type
-configure:3682: result: x86_64-unknown-linux-gnu
-configure:3785: checking for PHP prefix
-configure:3787: result: /usr/local/php7.2.11
-configure:3789: checking for PHP includes
-configure:3791: result: -I/usr/local/php7.2.11/include/php -I/usr/local/php7.2.11/include/php/main -I/usr/local/php7.2.11/include/php/TSRM -I/usr/local/php7.2.11/include/php/Zend -I/usr/local/php7.2.11/include/php/ext -I/usr/local/php7.2.11/include/php/ext/date/lib
-configure:3793: checking for PHP extension directory
-configure:3795: result: /usr/local/php7.2.11/lib/php/extensions/no-debug-non-zts-20170718
-configure:3797: checking for PHP installed headers prefix
-configure:3799: result: /usr/local/php7.2.11/include/php
-configure:3802: checking if debug is enabled
-configure:3828: result: no
-configure:3831: checking if zts is enabled
-configure:3857: result: no
-configure:3928: checking for re2c
-configure:3958: result: no
-configure:3983: WARNING: You will need re2c 0.13.4 or later if you want to regenerate PHP parsers.
-configure:3997: checking for gawk
-configure:4028: result: no
-configure:3997: checking for nawk
-configure:4014: found /usr/bin/nawk
-configure:4025: result: nawk
-configure:4048: checking if nawk is broken
-configure:4055: result: no
-configure:4068: checking whether to enable libtrie support
-configure:4107: result: yes, shared
-configure:4478: checking for ld used by cc
-configure:4545: result: /usr/bin/ld
-configure:4552: checking if the linker (/usr/bin/ld) is GNU ld
-configure:4567: result: yes
-configure:4572: checking for /usr/bin/ld option to reload object files
-configure:4579: result: -r
-configure:4597: checking for BSD-compatible nm
-configure:4646: result: /usr/bin/nm -B
-configure:4650: checking whether ln -s works
-configure:4654: result: yes
-configure:4661: checking how to recognize dependent libraries
-configure:4847: result: pass_all
-configure:4932: cc -c -g -O2  conftest.c >&5
-configure:4935: $? = 0
-configure:5065: checking for ANSI C header files
-configure:5085: cc -c -g -O2  conftest.c >&5
-configure:5085: $? = 0
-configure:5158: cc -o conftest -g -O2   conftest.c  >&5
-configure:5158: $? = 0
-configure:5158: ./conftest
-configure:5158: $? = 0
-configure:5169: result: yes
-configure:5182: checking for sys/types.h
-configure:5182: cc -c -g -O2  conftest.c >&5
-configure:5182: $? = 0
-configure:5182: result: yes
-configure:5182: checking for sys/stat.h
-configure:5182: cc -c -g -O2  conftest.c >&5
-configure:5182: $? = 0
-configure:5182: result: yes
-configure:5182: checking for stdlib.h
-configure:5182: cc -c -g -O2  conftest.c >&5
-configure:5182: $? = 0
-configure:5182: result: yes
-configure:5182: checking for string.h
-configure:5182: cc -c -g -O2  conftest.c >&5
-configure:5182: $? = 0
-configure:5182: result: yes
-configure:5182: checking for memory.h
-configure:5182: cc -c -g -O2  conftest.c >&5
-configure:5182: $? = 0
-configure:5182: result: yes
-configure:5182: checking for strings.h
-configure:5182: cc -c -g -O2  conftest.c >&5
-configure:5182: $? = 0
-configure:5182: result: yes
-configure:5182: checking for inttypes.h
-configure:5182: cc -c -g -O2  conftest.c >&5
-configure:5182: $? = 0
-configure:5182: result: yes
-configure:5182: checking for stdint.h
-configure:5182: cc -c -g -O2  conftest.c >&5
-configure:5182: $? = 0
-configure:5182: result: yes
-configure:5182: checking for unistd.h
-configure:5182: cc -c -g -O2  conftest.c >&5
-configure:5182: $? = 0
-configure:5182: result: yes
-configure:5196: checking dlfcn.h usability
-configure:5196: cc -c -g -O2  conftest.c >&5
-configure:5196: $? = 0
-configure:5196: result: yes
-configure:5196: checking dlfcn.h presence
-configure:5196: cc -E  conftest.c
-configure:5196: $? = 0
-configure:5196: result: yes
-configure:5196: checking for dlfcn.h
-configure:5196: result: yes
-configure:5218: checking the maximum length of command line arguments
-configure:5330: result: 1572864
-configure:5342: checking command to parse /usr/bin/nm -B output from cc object
-configure:5447: cc -c -g -O2  conftest.c >&5
-configure:5450: $? = 0
-configure:5454: /usr/bin/nm -B conftest.o \| sed -n -e 's/^.*[ 	]\([ABCDGIRSTW][ABCDGIRSTW]*\)[ 	][ 	]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p' \> conftest.nm
-configure:5457: $? = 0
-configure:5509: cc -o conftest -g -O2   conftest.c conftstm.o >&5
-configure:5512: $? = 0
-configure:5550: result: ok
-configure:5554: checking for objdir
-configure:5569: result: .libs
-configure:5661: checking for ar
-configure:5677: found /usr/bin/ar
-configure:5688: result: ar
-configure:5753: checking for ranlib
-configure:5769: found /usr/bin/ranlib
-configure:5780: result: ranlib
-configure:5845: checking for strip
-configure:5861: found /usr/bin/strip
-configure:5872: result: strip
-configure:6441: checking if cc supports -fno-rtti -fno-exceptions
-configure:6459: cc -c -g -O2  -fno-rtti -fno-exceptions conftest.c >&5
+configure:3535: result: no
+configure:3540: checking if compiler supports -Wl,-rpath,
+configure:3559: cc -o conftest -g -O2   conftest.c -Wl,-rpath,/usr/lib  >&5
+configure:3559: $? = 0
+configure:3569: result: yes
+configure:3614: checking build system type
+configure:3628: result: x86_64-pc-linux-gnu
+configure:3648: checking host system type
+configure:3661: result: x86_64-pc-linux-gnu
+configure:3681: checking target system type
+configure:3694: result: x86_64-pc-linux-gnu
+configure:3797: checking for PHP prefix
+configure:3799: result: /usr
+configure:3801: checking for PHP includes
+configure:3803: result: -I/usr/include/php -I/usr/include/php/main -I/usr/include/php/TSRM -I/usr/include/php/Zend -I/usr/include/php/ext -I/usr/include/php/ext/date/lib
+configure:3805: checking for PHP extension directory
+configure:3807: result: /usr/lib/php/extensions/no-debug-non-zts-20180731
+configure:3809: checking for PHP installed headers prefix
+configure:3811: result: /usr/include/php
+configure:3814: checking if debug is enabled
+configure:3840: result: no
+configure:3843: checking if zts is enabled
+configure:3869: result: no
+configure:3940: checking for re2c
+configure:3956: found /usr/bin/re2c
+configure:3967: result: re2c
+configure:3976: checking for re2c version
+configure:3990: result: 0.16 (ok)
+configure:4014: checking for gawk
+configure:4045: result: no
+configure:4014: checking for nawk
+configure:4031: found /usr/bin/nawk
+configure:4042: result: nawk
+configure:4065: checking if nawk is broken
+configure:4072: result: no
+configure:4085: checking whether to enable libtrie support
+configure:4124: result: yes, shared
+configure:4484: checking for a sed that does not truncate output
+configure:4538: result: /bin/sed
+configure:4552: checking for ld used by cc
+configure:4619: result: /usr/bin/ld
+configure:4626: checking if the linker (/usr/bin/ld) is GNU ld
+configure:4641: result: yes
+configure:4646: checking for /usr/bin/ld option to reload object files
+configure:4653: result: -r
+configure:4671: checking for BSD-compatible nm
+configure:4720: result: /usr/bin/nm -B
+configure:4724: checking whether ln -s works
+configure:4728: result: yes
+configure:4735: checking how to recognize dependent libraries
+configure:4921: result: pass_all
+configure:5006: cc -c -g -O2  conftest.c >&5
+configure:5009: $? = 0
+configure:5139: checking for ANSI C header files
+configure:5159: cc -c -g -O2  conftest.c >&5
+configure:5159: $? = 0
+configure:5232: cc -o conftest -g -O2   conftest.c  >&5
+configure:5232: $? = 0
+configure:5232: ./conftest
+configure:5232: $? = 0
+configure:5243: result: yes
+configure:5256: checking for sys/types.h
+configure:5256: cc -c -g -O2  conftest.c >&5
+configure:5256: $? = 0
+configure:5256: result: yes
+configure:5256: checking for sys/stat.h
+configure:5256: cc -c -g -O2  conftest.c >&5
+configure:5256: $? = 0
+configure:5256: result: yes
+configure:5256: checking for stdlib.h
+configure:5256: cc -c -g -O2  conftest.c >&5
+configure:5256: $? = 0
+configure:5256: result: yes
+configure:5256: checking for string.h
+configure:5256: cc -c -g -O2  conftest.c >&5
+configure:5256: $? = 0
+configure:5256: result: yes
+configure:5256: checking for memory.h
+configure:5256: cc -c -g -O2  conftest.c >&5
+configure:5256: $? = 0
+configure:5256: result: yes
+configure:5256: checking for strings.h
+configure:5256: cc -c -g -O2  conftest.c >&5
+configure:5256: $? = 0
+configure:5256: result: yes
+configure:5256: checking for inttypes.h
+configure:5256: cc -c -g -O2  conftest.c >&5
+configure:5256: $? = 0
+configure:5256: result: yes
+configure:5256: checking for stdint.h
+configure:5256: cc -c -g -O2  conftest.c >&5
+configure:5256: $? = 0
+configure:5256: result: yes
+configure:5256: checking for unistd.h
+configure:5256: cc -c -g -O2  conftest.c >&5
+configure:5256: $? = 0
+configure:5256: result: yes
+configure:5270: checking dlfcn.h usability
+configure:5270: cc -c -g -O2  conftest.c >&5
+configure:5270: $? = 0
+configure:5270: result: yes
+configure:5270: checking dlfcn.h presence
+configure:5270: cc -E  conftest.c
+configure:5270: $? = 0
+configure:5270: result: yes
+configure:5270: checking for dlfcn.h
+configure:5270: result: yes
+configure:5292: checking the maximum length of command line arguments
+configure:5404: result: 1572864
+configure:5416: checking command to parse /usr/bin/nm -B output from cc object
+configure:5521: cc -c -g -O2  conftest.c >&5
+configure:5524: $? = 0
+configure:5528: /usr/bin/nm -B conftest.o \| sed -n -e 's/^.*[ 	]\([ABCDGIRSTW][ABCDGIRSTW]*\)[ 	][ 	]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p' \> conftest.nm
+configure:5531: $? = 0
+configure:5583: cc -o conftest -g -O2   conftest.c conftstm.o >&5
+configure:5586: $? = 0
+configure:5624: result: ok
+configure:5628: checking for objdir
+configure:5643: result: .libs
+configure:5735: checking for ar
+configure:5751: found /usr/bin/ar
+configure:5762: result: ar
+configure:5827: checking for ranlib
+configure:5843: found /usr/bin/ranlib
+configure:5854: result: ranlib
+configure:5919: checking for strip
+configure:5935: found /usr/bin/strip
+configure:5946: result: strip
+configure:6515: checking if cc supports -fno-rtti -fno-exceptions
+configure:6533: cc -c -g -O2  -fno-rtti -fno-exceptions conftest.c >&5
 cc1: warning: command line option '-fno-rtti' is valid for C++/ObjC++ but not for C
-configure:6463: $? = 0
-configure:6476: result: no
-configure:6491: checking for cc option to produce PIC
-configure:6731: result: -fPIC
-configure:6739: checking if cc PIC flag -fPIC works
-configure:6757: cc -c -g -O2  -fPIC -DPIC conftest.c >&5
-configure:6761: $? = 0
-configure:6774: result: yes
-configure:6802: checking if cc static flag -static works
-configure:6830: result: yes
-configure:6840: checking if cc supports -c -o file.o
-configure:6861: cc -c -g -O2  -o out/conftest2.o conftest.c >&5
-configure:6865: $? = 0
-configure:6887: result: yes
-configure:6913: checking whether the cc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries
-configure:7841: result: yes
-configure:7862: checking whether -lc should be explicitly linked in
-configure:7867: cc -c -g -O2  conftest.c >&5
-configure:7870: $? = 0
-configure:7885: cc -shared conftest.o  -v -Wl,-soname -Wl,conftest -o conftest 2\>\&1 \| grep  -lc  \>/dev/null 2\>\&1
-configure:7888: $? = 0
-configure:7900: result: no
-configure:7908: checking dynamic linker characteristics
-configure:8506: result: GNU/Linux ld.so
-configure:8530: checking how to hardcode library paths into programs
-configure:8555: result: immediate
-configure:8569: checking whether stripping libraries is possible
-configure:8574: result: yes
-configure:9091: checking if libtool supports shared libraries
-configure:9093: result: yes
-configure:9096: checking whether to build shared libraries
-configure:9117: result: yes
-configure:9120: checking whether to build static libraries
-configure:9124: result: no
-configure:9219: result:
+configure:6537: $? = 0
+configure:6550: result: no
+configure:6565: checking for cc option to produce PIC
+configure:6805: result: -fPIC
+configure:6813: checking if cc PIC flag -fPIC works
+configure:6831: cc -c -g -O2  -fPIC -DPIC conftest.c >&5
+configure:6835: $? = 0
+configure:6848: result: yes
+configure:6876: checking if cc static flag -static works
+configure:6904: result: yes
+configure:6914: checking if cc supports -c -o file.o
+configure:6935: cc -c -g -O2  -o out/conftest2.o conftest.c >&5
+configure:6939: $? = 0
+configure:6961: result: yes
+configure:6987: checking whether the cc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries
+configure:7915: result: yes
+configure:7936: checking whether -lc should be explicitly linked in
+configure:7941: cc -c -g -O2  conftest.c >&5
+configure:7944: $? = 0
+configure:7959: cc -shared conftest.o  -v -Wl,-soname -Wl,conftest -o conftest 2\>\&1 \| grep  -lc  \>/dev/null 2\>\&1
+configure:7962: $? = 0
+configure:7974: result: no
+configure:7982: checking dynamic linker characteristics
+configure:8580: result: GNU/Linux ld.so
+configure:8604: checking how to hardcode library paths into programs
+configure:8629: result: immediate
+configure:8643: checking whether stripping libraries is possible
+configure:8648: result: yes
+configure:9165: checking if libtool supports shared libraries
+configure:9167: result: yes
+configure:9170: checking whether to build shared libraries
+configure:9191: result: yes
+configure:9194: checking whether to build static libraries
+configure:9198: result: no
+configure:9293: result:
 creating libtool
-configure:12918: creating ./config.status
+configure:12991: creating ./config.status
 
 ## ---------------------- ##
 ## Running config.status. ##
@@ -361,13 +366,12 @@ generated by GNU Autoconf 2.69.  Invocation command line was
 on ru-mi
 
 config.status:676: creating config.h
-config.status:766: config.h is unchanged
 
 ## ---------------- ##
 ## Cache variables. ##
 ## ---------------- ##
 
-ac_cv_build=x86_64-unknown-linux-gnu
+ac_cv_build=x86_64-pc-linux-gnu
 ac_cv_c_compiler_gnu=yes
 ac_cv_env_CC_set=
 ac_cv_env_CC_value=
@@ -398,12 +402,14 @@ ac_cv_header_strings_h=yes
 ac_cv_header_sys_stat_h=yes
 ac_cv_header_sys_types_h=yes
 ac_cv_header_unistd_h=yes
-ac_cv_host=x86_64-unknown-linux-gnu
+ac_cv_host=x86_64-pc-linux-gnu
 ac_cv_objext=o
 ac_cv_path_EGREP='/bin/grep -E'
 ac_cv_path_GREP=/bin/grep
+ac_cv_path_SED=/bin/sed
 ac_cv_prog_AWK=nawk
 ac_cv_prog_CPP='cc -E'
+ac_cv_prog_RE2C=re2c
 ac_cv_prog_ac_ct_AR=ar
 ac_cv_prog_ac_ct_CC=cc
 ac_cv_prog_ac_ct_RANLIB=ranlib
@@ -411,7 +417,7 @@ ac_cv_prog_ac_ct_STRIP=strip
 ac_cv_prog_cc_c89=
 ac_cv_prog_cc_cc_c_o=yes
 ac_cv_prog_cc_g=yes
-ac_cv_target=x86_64-unknown-linux-gnu
+ac_cv_target=x86_64-pc-linux-gnu
 lt_cv_deplibs_check_method=pass_all
 lt_cv_file_magic_cmd='$MAGIC_CMD'
 lt_cv_file_magic_test_file=
@@ -437,6 +443,7 @@ lt_lt_cv_sys_global_symbol_to_c_name_address='"sed -n -e '\''s/^: \\([^ ]*\\) \$
 lt_lt_cv_sys_global_symbol_to_cdecl='"sed -n -e '\''s/^. .* \\(.*\\)\$/extern int \\1;/p'\''"'
 php_cv_cc_dashr=no
 php_cv_cc_rpath=yes
+php_cv_re2c_version='0.16 (ok)'
 
 ## ----------------- ##
 ## Output variables. ##
@@ -475,7 +482,7 @@ PACKAGE_URL=''
 PACKAGE_VERSION=''
 PATH_SEPARATOR=':'
 RANLIB='ranlib'
-RE2C='exit 0;'
+RE2C='re2c'
 SED='/bin/sed'
 SHELL='/bin/bash'
 SHLIB_DL_SUFFIX_NAME='so'
@@ -483,21 +490,21 @@ SHLIB_SUFFIX_NAME='so'
 STRIP='strip'
 ac_ct_CC='cc'
 bindir='${exec_prefix}/bin'
-build='x86_64-unknown-linux-gnu'
+build='x86_64-pc-linux-gnu'
 build_alias=''
 build_cpu='x86_64'
 build_os='linux-gnu'
-build_vendor='unknown'
+build_vendor='pc'
 datadir='${datarootdir}'
 datarootdir='${prefix}/share'
 docdir='${datarootdir}/doc/${PACKAGE}'
 dvidir='${docdir}'
 exec_prefix='$(prefix)'
-host='x86_64-unknown-linux-gnu'
-host_alias='x86_64-unknown-linux-gnu'
+host='x86_64-pc-linux-gnu'
+host_alias='x86_64-pc-linux-gnu'
 host_cpu='x86_64'
 host_os='linux-gnu'
-host_vendor='unknown'
+host_vendor='pc'
 htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
@@ -508,18 +515,18 @@ localstatedir='${prefix}/var'
 mandir='${datarootdir}/man'
 oldincludedir='/usr/include'
 pdfdir='${docdir}'
-prefix='/usr/local/php7.2.11'
+prefix='/usr'
 program_transform_name='s,x,x,'
 psdir='${docdir}'
 runstatedir='${localstatedir}/run'
 sbindir='${exec_prefix}/sbin'
 sharedstatedir='${prefix}/com'
 sysconfdir='${prefix}/etc'
-target='x86_64-unknown-linux-gnu'
+target='x86_64-pc-linux-gnu'
 target_alias=''
 target_cpu='x86_64'
 target_os='linux-gnu'
-target_vendor='unknown'
+target_vendor='pc'
 
 ## ----------- ##
 ## confdefs.h. ##

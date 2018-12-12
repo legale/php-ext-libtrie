@@ -1,4 +1,4 @@
-# php-ext-libtrie v0.1.0
+# php-ext-libtrie v0.1.3
 php extension libtrie C library implementation
 
 DOWNLOAD

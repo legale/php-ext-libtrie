@@ -9,7 +9,7 @@ CONFIGURE_OPTIONS =
 SHLIB_SUFFIX_NAME = so
 SHLIB_DL_SUFFIX_NAME = so
 ZEND_EXT_TYPE = zend_extension
-RE2C = exit 0;
+RE2C = re2c
 AWK = nawk
 shared_objects_libtrie = libtrie/src/libtrie.lo libtrie/src/single_list.lo php_libtrie.lo
 PHP_PECL_EXTENSION = libtrie
@@ -17,12 +17,12 @@ PHP_MODULES = $(phplibdir)/libtrie.la
 PHP_ZEND_EX =
 all_targets = $(PHP_MODULES) $(PHP_ZEND_EX)
 install_targets = install-modules install-headers
-prefix = /usr/local/php7.2.11
+prefix = /usr
 exec_prefix = $(prefix)
 libdir = ${exec_prefix}/lib
-prefix = /usr/local/php7.2.11
+prefix = /usr
 phplibdir = /home/ru/CLionProjects/php-ext-libtrie/modules
-phpincludedir = /usr/local/php7.2.11/include/php
+phpincludedir = /usr/include/php
 CC = cc
 CFLAGS = -g -O2
 CFLAGS_CLEAN = $(CFLAGS)
@@ -31,11 +31,11 @@ CPPFLAGS = -DHAVE_CONFIG_H
 CXX =
 CXXFLAGS =
 CXXFLAGS_CLEAN = $(CXXFLAGS)
-EXTENSION_DIR = /usr/local/php7.2.11/lib/php/extensions/no-debug-non-zts-20170718
-PHP_EXECUTABLE = /usr/local/php7.2.11/bin/php
+EXTENSION_DIR = /usr/lib/php/extensions/no-debug-non-zts-20180731
+PHP_EXECUTABLE = /usr/bin/php
 EXTRA_LDFLAGS =
 EXTRA_LIBS =
-INCLUDES = -I/usr/local/php7.2.11/include/php -I/usr/local/php7.2.11/include/php/main -I/usr/local/php7.2.11/include/php/TSRM -I/usr/local/php7.2.11/include/php/Zend -I/usr/local/php7.2.11/include/php/ext -I/usr/local/php7.2.11/include/php/ext/date/lib
+INCLUDES = -I/usr/include/php -I/usr/include/php/main -I/usr/include/php/TSRM -I/usr/include/php/Zend -I/usr/include/php/ext -I/usr/include/php/ext/date/lib
 LFLAGS =
 LDFLAGS =
 SHARED_LIBTOOL =
@@ -159,10 +159,10 @@ clean:
 	find . -name \*.la -o -name \*.a | xargs rm -f
 	find . -name \*.so | xargs rm -f
 	find . -name .libs -a -type d|xargs rm -rf
-	rm -f libphp$(PHP_MAJOR_VERSION).la $(SAPI_CLI_PATH) $(SAPI_CGI_PATH) $(SAPI_MILTER_PATH) $(SAPI_LITESPEED_PATH) $(SAPI_FPM_PATH) $(OVERALL_TARGET) modules/* libs/*
+	rm -f libphp$(PHP_MAJOR_VERSION).la $(SAPI_CLI_PATH) $(SAPI_CGI_PATH) $(SAPI_LITESPEED_PATH) $(SAPI_FPM_PATH) $(OVERALL_TARGET) modules/* libs/*
 
 distclean: clean
-	rm -f Makefile config.cache config.log config.status Makefile.objects Makefile.fragments libtool main/php_config.h main/internal_functions_cli.c main/internal_functions.c stamp-h buildmk.stamp Zend/zend_dtrace_gen.h Zend/zend_dtrace_gen.h.bak Zend/zend_config.h TSRM/tsrm_config.h
+	rm -f Makefile config.cache config.log config.status Makefile.objects Makefile.fragments libtool main/php_config.h main/internal_functions_cli.c main/internal_functions.c buildmk.stamp Zend/zend_dtrace_gen.h Zend/zend_dtrace_gen.h.bak Zend/zend_config.h TSRM/tsrm_config.h
 	rm -f php7.spec main/build-defs.h scripts/phpize
 	rm -f ext/date/lib/timelib_config.h ext/mbstring/oniguruma/config.h ext/mbstring/libmbfl/config.h ext/oci8/oci8_dtrace_gen.h ext/oci8/oci8_dtrace_gen.h.bak
 	rm -f scripts/man1/phpize.1 scripts/php-config scripts/man1/php-config.1 sapi/cli/php.1 sapi/cgi/php-cgi.1 sapi/phpdbg/phpdbg.1 ext/phar/phar.1 ext/phar/phar.phar.1
@@ -181,7 +181,7 @@ prof-clean:
 	find . -name \*.lo -o -name \*.o | xargs rm -f
 	find . -name \*.la -o -name \*.a | xargs rm -f
 	find . -name \*.so | xargs rm -f
-	rm -f libphp$(PHP_MAJOR_VERSION).la $(SAPI_CLI_PATH) $(SAPI_CGI_PATH) $(SAPI_MILTER_PATH) $(SAPI_LITESPEED_PATH) $(SAPI_FPM_PATH) $(OVERALL_TARGET) modules/* libs/*
+	rm -f libphp$(PHP_MAJOR_VERSION).la $(SAPI_CLI_PATH) $(SAPI_CGI_PATH) $(SAPI_LITESPEED_PATH) $(SAPI_FPM_PATH) $(OVERALL_TARGET) modules/* libs/*
 
 prof-use:
 	CCACHE_DISABLE=1 $(MAKE) PROF_FLAGS=-fprofile-use all

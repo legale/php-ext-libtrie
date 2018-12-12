@@ -10,5 +10,5 @@ echo "Тут хорошо видно как работает дерево.\n
 Второе слово из 3 букв, но 2 буквы совпадают с первым словом,\n
 поэтому только 1 узел добавлен\n";
 print_r($nodes);
-print_r(node_traverse($trie, 0));
+print_r(yatrie_node_traverse($trie, 0));
 yatrie_free($trie);

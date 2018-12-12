@@ -1,3 +1,4 @@
+// php-ext-libtrie v0.1.3
 #ifndef PHP_LIBTRIE_H
 #define PHP_LIBTRIE_H
 
@@ -41,7 +42,7 @@
 extern zend_module_entry libtrie_module_entry;
 #define phpext_libtrie_ptr &libtrie_module_entry
 
-#define PHP_LIBTRIE_VERSION "0.1.0" /* Replace with version number for your extension */
+#define PHP_LIBTRIE_VERSION "0.1.3" /* Replace with version number for your extension */
 #define PHP_LIBTRIE_RES_NAME "libtrie data structure" /* PHP resource name */
 
 
@@ -61,7 +62,12 @@ PHP_FUNCTION(yatrie_save);
 PHP_FUNCTION(yatrie_free);
 PHP_FUNCTION(yatrie_add);
 PHP_FUNCTION(yatrie_get_id);
-PHP_FUNCTION(node_traverse);
+PHP_FUNCTION(yatrie_node_traverse);
+PHP_FUNCTION(yatrie_node_get_children);
+PHP_FUNCTION(yatrie_get_word_nodes);
+PHP_FUNCTION(yatrie_strrev);
+PHP_FUNCTION(yatrie_str_split);
+PHP_FUNCTION(yatrie_is_leaf);
 
 static void php_libtrie_dtor(zend_resource *rsrc TSRMLS_DC);
 
